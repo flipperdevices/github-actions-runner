@@ -25,5 +25,11 @@ RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
 RUN $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager tools platform-tools
 ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
+# Gradle
+RUN wget https://services.gradle.org/distributions/gradle-8.9-bin.zip -O /opt/archives/gradle-8.9-bin.zip
+RUN unzip /opt/archives/gradle-8.9-bin.zip -d /opt
+ENV GRADLE_HOME=/opt/gradle-8.9
+ENV PATH=$GRADLE_HOME/bin:$PATH
+
 RUN mkdir -p "/etc/docker"
 RUN echo "{\"mtu\": 1454}" | tee -a /etc/docker/daemon.json > /dev/null
