@@ -1,4 +1,4 @@
-FROM summerwind/actions-runner:v2.317.0-ubuntu-22.04
+FROM summerwind/actions-runner-dind:v2.317.0-ubuntu-22.04
 
 RUN DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt -y install wget apt-transport-https ca-certificates curl gnupg
 
