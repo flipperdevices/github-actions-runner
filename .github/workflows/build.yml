@@ -100,7 +100,7 @@ jobs:
         with:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.K8S_GITHUB_PAT }}
-          event-type: ${{ steps.tag.outputs.image_name }}-android-deploy
+          event-type: github-actions-runner-fz-fw-deploy-android-deploy
           client-payload: '{"image_tag": "${{steps.tag.outputs.image_tag}}"}'
 
       - name: 'Trigger k8s to use new image flipperzero-firmware: prod'
@@ -111,5 +111,5 @@ jobs:
         with:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.K8S_GITHUB_PAT }}
-          event-type: ${{ steps.tag.outputs.image_name }}-fz-fw-deploy
+          event-type: github-actions-runner-fz-fw-deploy-fz-fw-deploy
           client-payload: '{"image_tag": "${{steps.tag.outputs.image_tag}}"}'
