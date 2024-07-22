@@ -2,12 +2,12 @@ apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: github-runner-deployment-autoscaler
+  name: {{ .Release.Name }}-autoscaler
 spec:
   scaleDownDelaySecondsAfterScaleOut: 180
   scaleTargetRef:
     kind: RunnerDeployment
-    name: github-runner-deployment
+    name: {{ .Release.Name }}
   minReplicas: {{ .Values.replicasCount }}
   maxReplicas: {{ .Values.replicasCount }}
   metrics:

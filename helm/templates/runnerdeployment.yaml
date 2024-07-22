@@ -1,7 +1,7 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: github-runner-deployment
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 spec:
@@ -40,5 +40,5 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              runner-deployment-name: github-runner-deployment
+              runner-deployment-name: {{ .Release.Name }}
       {{- end }}
