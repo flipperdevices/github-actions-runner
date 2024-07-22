@@ -1,5 +1,0 @@
-apiVersion: v2
-name: github-actions-runner
-description: Github Action runners deployment
-type: application
-version: 0.1.0
