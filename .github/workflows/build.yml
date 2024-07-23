@@ -82,7 +82,7 @@ jobs:
             && (!endsWith(github.event.client_payload.image_tag, '-rc')) }}
         uses: peter-evans/repository-dispatch@v3
         with:
-          repository: ${{ secrets.INFRASTRUCTURE_REPO }}
+          repository: ${{ secrets.BAREMETAL_INFRASTRUCTURE_REPO }}
           token: ${{ secrets.K8S_GITHUB_PAT }}
           event-type: github-actions-runner-android-deploy
           client-payload: '{"image_tag": "${{steps.tag.outputs.image_tag}}"}'
