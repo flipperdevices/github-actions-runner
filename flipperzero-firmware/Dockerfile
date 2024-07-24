@@ -11,7 +11,7 @@ RUN sudo wget -O /etc/apt/sources.list.d/viva64.list https://cdn.pvs-studio.com/
 RUN curl https://baltocdn.com/helm/signing.asc | sudo gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 
-RUN DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt -y install pvs-studio=7.31.81895.392-1 kubectl helm
+RUN DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt -y install pvs-studio=7.31.81895.392-1 kubectl helm python3-pip
 
 RUN sudo mkdir -p "/etc/docker"
 RUN echo "{\"mtu\": 1454}" | sudo tee -a /etc/docker/daemon.json > /dev/null
