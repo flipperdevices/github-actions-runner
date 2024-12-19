@@ -41,14 +41,6 @@ jobs:
       - name: 'Set up Docker Buildx'
         uses: docker/setup-buildx-action@v3
 
-      - name: 'Build android'
-        uses: docker/build-push-action@v6
-        with:
-          push: false
-          tags: ${{ steps.tag.outputs.image_name }}-android:${{ steps.tag.outputs.image_tag }}
-          cache-from: type=registry,ref=${{ steps.tag.outputs.image_name }}-android:buildcache
-          context: android
-
       - name: 'Build flipperzero-firmware'
         uses: docker/build-push-action@v6
         with:
@@ -56,16 +48,6 @@ jobs:
           tags: ${{ steps.tag.outputs.image_name }}-fz-fw:${{ steps.tag.outputs.image_tag }}
           cache-from: type=registry,ref=${{ steps.tag.outputs.image_name }}-fz-fw:buildcache
           context: flipperzero-firmware
-
-      - name: 'Push android'
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ${{ steps.tag.outputs.image_name }}-android:${{ steps.tag.outputs.image_tag }}
-          cache-from: type=registry,ref=${{ steps.tag.outputs.image_name }}-android:buildcache
-          cache-to: type=registry,ref=${{ steps.tag.outputs.image_name }}-android:buildcache,mode=max
-          context: android
 
       - name: 'Push flipperzero-firmware'
         if: ${{ github.event_name != 'pull_request' }}
@@ -76,17 +58,6 @@ jobs:
           cache-from: type=registry,ref=${{ steps.tag.outputs.image_name }}-fz-fw:buildcache
           cache-to: type=registry,ref=${{ steps.tag.outputs.image_name }}-fz-fw:buildcache,mode=max
           context: flipperzero-firmware
-
-      - name: 'Trigger k8s to use new image android: prod'
-        if: ${{ (github.event_name != 'pull_request')
-            && (steps.tag.outputs.image_tag != '0.0.0')
-            && (!endsWith(github.event.client_payload.image_tag, '-rc')) }}
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          repository: ${{ secrets.BAREMETAL_INFRASTRUCTURE_REPO }}
-          token: ${{ secrets.K8S_GITHUB_PAT }}
-          event-type: github-actions-runner-android-deploy
-          client-payload: '{"image_tag": "${{steps.tag.outputs.image_tag}}"}'
 
       - name: 'Trigger k8s to use new image flipperzero-firmware: prod'
         if: ${{ (github.event_name != 'pull_request')
