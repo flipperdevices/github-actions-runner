@@ -1,4 +1,4 @@
-FROM summerwind/actions-runner-dind:v2.317.0-ubuntu-22.04
+FROM summerwind/actions-runner-dind:v2.321.0-ubuntu-22.04
 
 RUN DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt -y install wget apt-transport-https ca-certificates curl gnupg
 
@@ -33,5 +33,5 @@ RUN sudo chown -R runner:runner /opt/android_sdk/
 RUN sdkmanager --install "platforms;android-34"
 
 # Warmup project
-RUN git clone --recurse-submodules https://github.com/flipperdevices/Flipper-Android-App.git -b 1.7.1.1656 /tmp/android-warmup/
+RUN git clone --recurse-submodules https://github.com/flipperdevices/Flipper-Android-App.git -b 1.8.1.1862 /tmp/android-warmup/
 RUN cd /tmp/android-warmup/ && ./gradlew assembleDebug && rm -rf /tmp/android-warmup/
